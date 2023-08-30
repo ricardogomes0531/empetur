@@ -18,6 +18,13 @@ return mysqli_query($GLOBALS["conn"],$sql);
 mysqli_close($GLOBALS["conn"]);
 }
 
+function PesquisarPorEmail($email)
+{
+$sql = "select * from Usuarios where Email = '".$email."'";
+return mysqli_query($GLOBALS["conn"],$sql);
+mysqli_close($GLOBALS["conn"]);
+}
+
 function UsuarioValido($login, $senha)
 {
 $sql = "select count(Email) as Total, Email, Senha from Usuarios where Email='".$login."' and senha='".$senha."'";
