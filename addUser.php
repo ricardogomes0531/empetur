@@ -110,8 +110,8 @@
                     <i class="fa fa-bars"></i>
                 </a>
             <!--
-                <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" placeholder="Search">
+                <form class="d-none d-md-flex ms-4" action="" method="get">
+                    <input class="form-control border-0" type="search" name="pesquisar" placeholder="Search">
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
@@ -351,8 +351,10 @@
                       </div>
                     <!-- End Modal -->
                     <div class="d-flex mb-2">
-                        <input class="form-control bg-transparent" type="text" placeholder="Pesquisar usuário">
-                        <button type="button" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+<form action="" method="get">
+                        <input class="form-control bg-transparent" type="text" name="pesquisar" placeholder="Pesquisar usuário">
+                        <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+</form>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -368,71 +370,38 @@
                                 </tr>
                             </thead>
                             <tbody>
+<?php
+require_once("Php/Repository/UsuarioRepository.php");
+@$pesquisa = $_GET["pesquisar"];
+if (isset($pesquisa))
+{
+$query = PesquisarPorNome($pesquisa);
+}
+else
+{
+$query = Listar();
+}
+while($result = mysqli_fetch_array($query))
+{
+$dataFormatada = explode("-", $result["DataCadastro"]);
+$status="Inativo";
+if ($result["Status"] == "a")
+{
+$status="Ativo";
+}
+
+echo "
                                 <tr>
                                     <td></td>
-                                    <td>DD/MM/AAAA</td>
-                                    <td>RBML</td>
-                                    <td>Jhon Doe</td>
-                                    <td>jhondoe@gmail.com</td>
-                                    <td><a class="text-success"><i class="bi bi-check-circle m-2"></i></a><a class="text-danger"><i class="bi bi-x-circle"></i></a></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square-fill"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-sm btn-danger" href=""><i class="bi bi-file-earmark-excel-fill"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>DD/MM/AAAA</td>
-                                    <td>RBML</td>
-                                    <td>Jhon Doe</td>
-                                    <td>jhondoe@gmail.com</td>
-                                    <td><a class="text-success"><i class="bi bi-check-circle m-2"></i></a><a class="text-danger"><i class="bi bi-x-circle"></i></a></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square-fill"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-sm btn-danger" href=""><i class="bi bi-file-earmark-excel-fill"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>DD/MM/AAAA</td>
-                                    <td>RBML</td>
-                                    <td>Jhon Doe</td>
-                                    <td>jhondoe@gmail.com</td>
-                                    <td><a class="text-success"><i class="bi bi-check-circle m-2"></i></a><a class="text-danger"><i class="bi bi-x-circle"></i></a></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square-fill"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-sm btn-danger" href=""><i class="bi bi-file-earmark-excel-fill"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>DD/MM/AAAA</td>
-                                    <td>RBML</td>
-                                    <td>Jhon Doe</td>
-                                    <td>jhondoe@gmail.com</td>
-                                    <td><a class="text-success"><i class="bi bi-check-circle m-2"></i></a><a class="text-danger"><i class="bi bi-x-circle"></i></a></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square-fill"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-sm btn-danger" href=""><i class="bi bi-file-earmark-excel-fill"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>DD/MM/AAAA</td>
-                                    <td>RBML</td>
-                                    <td>Jhon Doe</td>
-                                    <td>jhondoe@gmail.com</td>
-                                    <td><a class="text-success"><i class="bi bi-check-circle m-2"></i></a><a class="text-danger"><i class="bi bi-x-circle"></i></a></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square-fill"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-sm btn-danger" href=""><i class="bi bi-file-earmark-excel-fill"></i></a>
-                                    </td>
-                                </tr>
+                                    <td>".$dataFormatada["2"]."/".$dataFormatada["1"]."/".$dataFormatada["0"]."</td>
+                                    <td>".$result["Login"]."</td>
+                                    <td>".$result["Nome"]."</td>
+                                    <td>".$result["Email"]."</td>
+                                    <td>".$status."</td>
+                                    <td><a class='btn btn-sm btn-primary m-2' href=''><i class='bi bi-info-square-fill'></i></a><a class='btn btn-sm btn-warning m-2' href=''><i class='bi bi-pencil-square'></i></a><a class='btn btn-sn btn-danger m-2' href=''><i class='bi bi-file-earmark-excel-fill'></i></a></td>
+                                </tr>";
+}
+?>
                             </tbody>
                         </table>
                     </div>

@@ -54,11 +54,12 @@
                             <h3>Sign In</h3>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+<form name="formLogin" action="logar.php" method="post">
+                            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
                             <label for="floatingInput">User name</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -68,8 +69,9 @@
                             </div>
                             <a href="">Forgot Password</a>
                         </div>
-                        <button type="submit" class="btn btn-success py-3 w-100 mb-4">Entrar</button>
+                        <button type="button" onClick="checkFields()" class="btn btn-success py-3 w-100 mb-4">Entrar</button>
                         <p class="text-center mb-0">Don't have an Account? <a href="#">Sign Up</a></p>
+</form>
                     </div>
                 </div>
             </div>
@@ -90,6 +92,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/login/validate.js"></script>
 </body>
 
 </html>
