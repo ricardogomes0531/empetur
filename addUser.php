@@ -1,3 +1,22 @@
+<?php
+require_once("Php/Repository/UsuarioRepository.php");
+@$saved = false;
+if (isset($_POST["nome"]))
+{
+@$nome = $_POST["nome"];
+@$login = $_POST["login"];
+@$email=$_POST["email"];
+@$senha=$_POST["password"];
+@$permissao=$_POST["permissao"];
+@$grupo=$_POST["grupo"];
+$userIsSaved = inserir($nome, $login, $email, $senha, $permissao, $grupo);
+if ($userIsSaved)
+{
+$saved = true;
+}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -289,62 +308,63 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form name="formLogin" action="" method="post">
                                     <div class="bg-light rounded-top p-4">
                                         <div class="bg-light rounded h-100 p-1">
                                             <div class="form-floating mb-2">
-                                                <input type="nome" class="form-control" id="floatingInput"
+                                                <input type="nome" class="form-control" name="nome" id="floatingInput"
                                                     placeholder="Nome completo">
                                                 <label for="floatingInput">Nome completo</label>
                                             </div>
                                             <div class="form-floating mb-2">
-                                                <input type="email" class="form-control" id="floatingInput"
+                                                <input type="email" class="form-control" name="email" id="floatingInput"
                                                     placeholder="name@example.com">
                                                 <label for="floatingInput">E-mail</label>
                                             </div>
                                             <div class="form-floating mb-2">
-                                                <input type="login" class="form-control" id="floatingPassword"
+                                                <input type="text" class="form-control" name="login" id="floatingPassword"
                                                     placeholder="Login">
                                                 <label for="floatingPassword">Login de acesso</label>
                                             </div>
                                             <div class="form-floating mb-2">
-                                                <input type="password" class="form-control" id="floatingPassword"
+                                                <input type="password" class="form-control" name="password" id="floatingPassword"
                                                     placeholder="Password">
                                                 <label for="floatingPassword">Password</label>
                                             </div>
                                             <div class="form-floating mb-2">
-                                                <select class="form-select" id="permissao"
+                                                <select class="form-select" name="permissao" id="permissao"
                                                     aria-label="Floating label select example">
-                                                    <option selected>Selecione ...</option>
-                                                    <option value="1">Ativo</option>
-                                                    <option value="2">desativado</option>
+                                                    <option value="" selected>Selecione ...</option>
+                                                    <option value="s">Ativo</option>
+                                                    <option value="n">desativado</option>
                                                 </select>
                                                 <label for="floatingSelect">Permissão usuário</label>
                                             </div>
                                             <div class="form-floating mb-2">
-                                                <select class="form-select" id="grupo"
+                                                <select class="form-select" name="grupo" id="grupo"
                                                     aria-label="Floating label select example">
-                                                    <option selected>Selecione ...</option>
-                                                    <option value="1">Aprovador</option>
-                                                    <option value="2">Agente</option>
-                                                    <option value="3">Visualizador</option>
+                                                    <option value="" selected>Selecione ...</option>
+                                                    <option value="a">Aprovador</option>
+                                                    <option value="g">Agente</option>
+                                                    <option value="v">Visualizador</option>
                                                 </select>
                                                 <label for="floatingSelect">Grupo usuário</label>
                                             </div>
                                             <!--
                                             <div class="form-floating">
                                                 <textarea class="form-control" placeholder="Leave a comment here"
-                                                    id="floatingTextarea" style="height: 150px;"></textarea>
+                                                    name="comentario" id="floatingTextarea" style="height: 150px;"></textarea>
                                                 <label for="floatingTextarea">Comments</label>
                                             </div>
                                             -->
                                         </div>
                                     </div>
                                 </form>
+<input type="hidden" name="formSubmetido">
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                              <button type="button" class="btn btn-primary"><i class="bi bi-save2"></i> Salvar</button>
+                              <button type="button" onClick="salvar()" class="btn btn-primary"><i class="bi bi-save2"></i> Salvar</button>
                             </div>
                           </div>
                         </div>
@@ -356,6 +376,13 @@
                         <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
 </form>
                     </div>
+<?php
+if ($saved)
+{
+echo "<p role='alert'>Usuário cadastrado com sucesso!</p>";
+}
+?>
+
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
@@ -570,6 +597,7 @@ echo "
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/login/login.js"></script>
 </body>
 
 </html>

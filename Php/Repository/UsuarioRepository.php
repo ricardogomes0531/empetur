@@ -46,4 +46,17 @@ return false;
 mysqli_close($GLOBALS["conn"]);
 }
 
+
+function Inserir($nome, $email, $login, $password, $status, $administrador)
+{
+$sql = "insert into Usuarios(Nome, Login, Email, Senha, Status, Administrador, DataCadastro, DataAlteracao, Usuario) 
+values('".$nome."', '".$login."', '".$email."', '".$password."', '".$status."', '".$administrador."', now(), null, null)";
+if (mysqli_query($GLOBALS["conn"],$sql) > 0)
+{
+return true;
+}
+return false;
+mysqli_close($GLOBALS["conn"]);
+}
+
 ?>
