@@ -269,7 +269,7 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form name="formArea" action="" method="post">
                                     <div class="bg-light rounded-top p-4">
                                         <div class="bg-light rounded h-100 p-1">
                                             <!--
@@ -294,7 +294,7 @@
                                             </fieldset>
                                             -->
                                             <div class="col-md-2 form-floating mb-2">
-                                                <select class="form-select" id="Tipo de área"
+                                                <select class="form-select" id="Tipo de área" name="tipoArea"
                                                     aria-label="Floating label select example">
                                                     <option selected>Selecione ...</option>
                                                     <option value="1">Teatro</option>
@@ -308,29 +308,29 @@
                                             </div>
                                             <div class="form-floating mb-2">
                                                 <input type="text" class="form-control" id="floatingInput"
-                                                    placeholder="Nome">
+                                                    placeholder="Nome" name="nome">
                                                 <label for="floatingInput">Nome</label>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Capacidade">
+                                                        placeholder="Capacidade" name="capacidade">
                                                     <label for="floatingInput">Capacidade</label>
                                                 </div>
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Dimensão">
+                                                        placeholder="Dimensão" name="dimensao">
                                                     <label for="floatingInput">Dimensão</label>
                                                 </div>
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Pé direito">
+                                                        placeholder="Pé direito" name="peDireito">
                                                     <label for="floatingInput">Pé direito</label>
                                                 </div>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-6 form-floating mb-2">
-                                                    <select class="form-select" id="Dependência"
+                                                    <select class="form-select" id="Dependência" name="dependencia"
                                                         aria-label="Floating label select example">
                                                         <option selected>Selecione ...</option>
                                                         <option value="118">Ala Leste (Portões E / F / G e H) dos Pavilhões de Feiras</option>
@@ -446,7 +446,7 @@
                                                 </div>
                                                 <div class="col-md-6 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Caução">
+                                                        placeholder="Caução" name="caucao">
                                                     <label for="floatingInput">Caução</label>
                                                 </div>
                                             </div>
@@ -454,15 +454,15 @@
                                                 <legend class="col-form-label col-sm-2 pt-0">Áreas</legend>
                                                 <div class="col-sm-6">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                            id="gridRadios1" value="option1" checked>
+                                                        <input class="form-check-input" type="radio" name="situacao"
+                                                            id="gridRadios1" value="inativa" checked>
                                                         <label class="form-check-label" for="gridRadios1">
                                                             Inativa
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                            id="gridRadios2" value="option2">
+                                                        <input class="form-check-input" type="radio" name="situacao"
+                                                            id="gridRadios2" value="visualizada">
                                                         <label class="form-check-label" for="gridRadios2">
                                                             Visualizada
                                                         </label>
@@ -477,18 +477,18 @@
                                                 </div>
                                                 <div class="col-md-6 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Descrição">
+                                                        placeholder="Descrição" name="descricao">
                                                     <label for="floatingInput">Descrição</label>
                                                 </div>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-3 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Preço">
+                                                        placeholder="Preço" name="preco">
                                                     <label for="floatingInput">Preço</label>
                                                 </div>
                                                 <div class="col-md-3 form-floating mb-2">
-                                                    <select class="form-select" id="Turno"
+                                                    <select class="form-select" id="Turno" name="turno"
                                                         aria-label="Floating label select example">
                                                         <option selected>Selecione ...</option>
                                                         <option value="1">Dia</option>
@@ -499,11 +499,11 @@
                                                 </div>
                                                 <div class="col-md-3 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Qtde">
+                                                        placeholder="Qtde" name="quantidade">
                                                     <label for="floatingInput">Qtde</label>
                                                 </div>
                                                 <div class="col-md-3 form-floating mb-2">
-                                                    <select class="form-select" id="inativa"
+                                                    <select class="form-select" id="inativa" name="inativa"
                                                         aria-label="Floating label select example">
                                                         <option selected>Selecione ...</option>
                                                         <option value="1">Sim</option>
@@ -525,7 +525,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                              <button type="button" class="btn btn-primary"><i class="bi bi-save2"></i> Salvar</button>
+                              <button type="button" onClick="salvar()" class="btn btn-primary"><i class="bi bi-save2"></i> Salvar</button>
                             </div>
                           </div>
                         </div>
@@ -783,6 +783,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/area/area.js"></script>
 </body>
 
 </html>
