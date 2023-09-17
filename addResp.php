@@ -450,8 +450,10 @@ $saved = true;
                       </div>
                     <!-- End Modal -->
                     <div class="d-flex mb-2">
-                        <input class="form-control bg-transparent" type="text" placeholder="Pesquisar Responsável">
-                        <button type="button" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+<form action="" method="get">
+                        <input class="form-control bg-transparent" type="text" placeholder="Pesquisar Responsável" name="pesquisar">
+                        <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+</form>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -466,61 +468,30 @@ $saved = true;
                                 </tr>
                             </thead>
                             <tbody>
+<?php
+require_once("Php/Repository/ReservaResponsavelRepository.php");
+@$pesquisa = $_GET["pesquisar"];
+if (isset($pesquisa))
+{
+$query = PesquisarPorNome($pesquisa);
+}
+else
+{
+$query = Listar();
+}
+while($result = mysqli_fetch_array($query))
+{
+$dataFormatada = explode("-", $result["date_created"]);
+
+echo "
                                 <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
+                                    <td>".$result["nome"]."</td>
+                                    <td>".$result["telefone"]."</td>
+                                    <td>".$result["email"]."</td>
+                                    <td><a class='btn btn-sm btn-primary m-2' href=''><i class='bi bi-info-square-fill'></i></a></td>
+                                </tr>";
+}
+?>
                             </tbody>
                         </table>
                     </div>

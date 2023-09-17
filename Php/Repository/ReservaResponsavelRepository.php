@@ -4,6 +4,24 @@ require_once("DataBase.php");
 $database = new DataBase();
 $conn = $database->connect();
 
+
+function PesquisarPorNome($nome)
+{
+$sql = "select * from reserva_responsavel where nome like '%".$nome."%'";
+return mysqli_query($GLOBALS["conn"],$sql);
+mysqli_close($GLOBALS["conn"]);
+}
+
+
+
+function Listar()
+{
+$sql = "select * from reserva_responsavel order by id desc limit 10";
+return mysqli_query($GLOBALS["conn"],$sql);
+mysqli_close($GLOBALS["conn"]);
+}
+
+
 function Inserir($nome, $telefone, $email, $nacionalidade, $estadoCivil, $rg, $cpf, $orgaoExpedidor, $profissao, $logradouro, $numero, $bairro, $cidade, $cep, $complemento, $uf)
 {
 
