@@ -1,3 +1,42 @@
+<?php
+session_start();
+if (!isset($_SESSION["email"]))
+{
+header("Location: signin.php");
+exit;
+}
+
+?>
+
+<?php
+require_once("Php/Repository/ReservaResponsavelRepository.php");
+@$saved = false;
+if (isset($_POST["nome"]))
+{
+@$nome = $_POST["nome"];
+@$telefone = $_POST["telefone"];
+@$email = $_POST["email"];
+@$rg=$_POST["rg"];
+@$orgaoEmissor = $_POST["orgaoEmissor"];
+@$cpf=$_POST["cpf"];
+@$profissao = $_POST["profissao"];
+@$nacionalidade = $_POST["nacionalidade"];
+@$estadoCivil = $_POST["estadoCivil"];
+@$logradouro=$_POST["logradouro"];
+@$numero=$_POST["numero"];
+@$complemento=$_POST["complemento"];
+@$bairro=$_POST["bairro"];
+@$cidade=$_POST["cidade"];
+@$cep=$_POST["cep"];
+@$uf=$_POST["uf"];
+$userIsSaved = inserir($nome, $telefone, $email, $nacionalidade, $estadoCivil, $rg, $cpf, $orgaoEmissor, $profissao, $logradouro, $numero, $bairro, $cidade, $cep, $complemento, $uf);
+if ($userIsSaved)
+{
+$saved = true;
+}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -269,7 +308,7 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form name="formResponsavel" action="" method="post">
                                     <div class="bg-light rounded-top p-4">
                                         <div class="bg-light rounded h-100 p-1">
                                             <!--
@@ -277,15 +316,15 @@
                                                 <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
                                                 <div class="col-sm-6">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                            id="gridRadios1" value="option1" checked>
+                                                        <input class="form-check-input" type="radio" name="tipoPessoa"
+                                                            id="gridRadios1" value="j" checked>
                                                         <label class="form-check-label" for="gridRadios1">
                                                             Pessoa jurídica
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                                            id="gridRadios2" value="option2">
+                                                        <input class="form-check-input" type="radio" name="tipoPessoa"
+                                                            id="gridRadios2" value="f">
                                                         <label class="form-check-label" for="gridRadios2">
                                                             Pessoa Física
                                                         </label>
@@ -295,93 +334,98 @@
                                             -->
                                             <div class="form-floating mb-2">
                                                 <input type="text" class="form-control" id="floatingInput"
-                                                    placeholder="Nome">
+                                                    placeholder="Nome" name="nome">
                                                 <label for="floatingInput">Nome</label>
                                             </div>
                                             <div class="form-floating mb-2">
                                                 <input type="text" class="form-control" id="floatingInput"
-                                                    placeholder="E-mail">
+                                                    placeholder="Telefone" name="telefone">
+                                                <label for="floatingInput">E-mail</label>
+                                            </div>
+                                            <div class="form-floating mb-2">
+                                                <input type="text" class="form-control" id="floatingInput"
+                                                    placeholder="E-mail" name="email">
                                                 <label for="floatingInput">E-mail</label>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Identidade">
+                                                        placeholder="Identidade" name="rg">
                                                     <label for="floatingInput">Identidade</label>
                                                 </div>
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Orgão emissor">
+                                                        placeholder="Orgão emissor" name="orgaoEmissor">
                                                     <label for="floatingInput">Orgão emissor</label>
                                                 </div>
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="CPF">
+                                                        placeholder="CPF" name="cpf">
                                                     <label for="floatingInput">CPF</label>
                                                 </div>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Profissão">
+                                                        placeholder="Profissão" name="profissao">
                                                     <label for="floatingInput">Profissão</label>
                                                 </div>
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Nacionalidade">
+                                                        placeholder="Nacionalidade" name="nacionalidade">
                                                     <label for="floatingInput">Nacionalidade</label>
                                                 </div>
                                                 <div class="col-md-2 form-floating mb-2">
-                                                    <select class="form-select" id="Estado civil"
+                                                    <select class="form-select" id="Estado civil" name="estadoCivil"
                                                         aria-label="Floating label select example">
                                                         <option selected>Selecione ...</option>
-                                                        <option value="1">Solteriro(a)</option>
-                                                        <option value="2">Casado(a)</option>
-                                                        <option value="3">Divorciado(a)</option>
-                                                        <option value="4">Viúvo(a)</option>
+                                                        <option value="s">Solteiro(a)</option>
+                                                        <option value="c">Casado(a)</option>
+                                                        <option value="d">Divorciado(a)</option>
+                                                        <option value="v">Viúvo(a)</option>
                                                     </select>
                                                     <label for="floatingSelect">Estado civil</label>
                                                 </div>
                                             </div>
                                             <div class="form-floating mb-2">
                                                 <input type="text" class="form-control" id="floatingInput"
-                                                    placeholder="Logradouro">
+                                                    placeholder="Logradouro" name="logradouro">
                                                 <label for="floatingInput">Logradouro</label>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Número">
+                                                        placeholder="Número" name="numero">
                                                     <label for="floatingInput">Número</label>
                                                 </div>
                                                 <div class="col-md-8 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Complemento">
+                                                        placeholder="Complemento" name="complemento">
                                                     <label for="floatingInput">Complemento</label>
                                                 </div>
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-md-3 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Bairro">
+                                                        placeholder="Bairro" name="bairro">
                                                     <label for="floatingInput">Bairro</label>
                                                 </div>
                                                 <div class="col-md-3 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Cidade">
+                                                        placeholder="Cidade" name="cidade">
                                                     <label for="floatingInput">Cidade</label>
                                                 </div>
                                                 <div class="col-md-4 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="CEP">
+                                                        placeholder="CEP" name="cep">
                                                     <label for="floatingInput">CEP</label>
                                                 </div>
                                                 <div class="col-md-2 form-floating mb-2">
-                                                    <select class="form-select" id="UF"
+                                                    <select class="form-select" id="UF" name="uf"
                                                         aria-label="Floating label select example">
                                                         <option selected>Selecione ...</option>
-                                                        <option value="1">PE</option>
-                                                        <option value="2">AM</option>
+                                                        <option value="pe">PE</option>
+                                                        <option value="am">AM</option>
                                                     </select>
                                                     <label for="floatingSelect">UF</label>
                                                 </div>
@@ -399,7 +443,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                              <button type="button" class="btn btn-primary"><i class="bi bi-save2"></i> Salvar</button>
+                              <button type="button" onClick="salvar()" class="btn btn-primary"><i class="bi bi-save2"></i> Salvar</button>
                             </div>
                           </div>
                         </div>
@@ -607,6 +651,12 @@
             </div>
             -->
             <!-- Widgets End -->
+<?php
+if ($saved)
+{
+echo "<p role='alert'>Usuário cadastrado com sucesso!</p>";
+}
+?>
 
 
             <!-- Footer Start -->
@@ -645,6 +695,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/responsavel/responsavel.js"></script>
 </body>
 
 </html>
