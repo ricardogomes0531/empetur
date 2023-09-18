@@ -1,3 +1,42 @@
+<?php
+session_start();
+if (!isset($_SESSION["email"]))
+{
+header("Location: signin.php");
+exit;
+}
+
+?>
+
+<?php
+require_once("Php/Repository/ReservaAreaRepository.php");
+@$saved = false;
+if (isset($_POST["nome"]))
+{
+@$tipo = $_POST["tipoArea"];
+@$nome = $_POST["nome"];
+@$capacidade = $_POST["capacidade"];
+@$dimensao=$_POST["dimensao"];
+@$peDireito = $_POST["peDireito"];
+@$dependenciaId=$_POST["dependencia"];
+@$caucao = $_POST["caucao"];
+@$situacao = $_POST["situacao"];
+//@$vizualizar = $_POST["vizualizar"];
+@$descricao=$_POST["descricao"];
+@$preco=$_POST["preco"];
+@$turno=$_POST["turno"];
+@$nome2=$_POST["nome2"];
+@$quantidade=$_POST["quantidade"];
+@$inativa=$_POST["inativa"];
+
+$userIsSaved = inserir($tipo, $nome, $capacidade, $dimensao, $peDireito, $dependenciaId, $caucao, $situacao, $nome2, $descricao, $preco, $turno, $quantidade, $inativa);
+if ($userIsSaved)
+{
+$saved = true;
+}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -455,14 +494,14 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="situacao"
-                                                            id="gridRadios1" value="inativa" checked>
+                                                            id="gridRadios1" value="1" checked>
                                                         <label class="form-check-label" for="gridRadios1">
                                                             Inativa
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" name="situacao"
-                                                            id="gridRadios2" value="visualizada">
+                                                            id="gridRadios2" value="0">
                                                         <label class="form-check-label" for="gridRadios2">
                                                             Visualizada
                                                         </label>
@@ -472,7 +511,7 @@
                                             <div class="row g-3">
                                                 <div class="col-md-6 form-floating mb-2">
                                                     <input type="text" class="form-control" id="floatingInput"
-                                                        placeholder="Nome">
+                                                        placeholder="Nome" name="nome2">
                                                     <label for="floatingInput">Nome</label>
                                                 </div>
                                                 <div class="col-md-6 form-floating mb-2">
@@ -507,7 +546,7 @@
                                                         aria-label="Floating label select example">
                                                         <option selected>Selecione ...</option>
                                                         <option value="1">Sim</option>
-                                                        <option value="2">Não</option>
+                                                        <option value="0">Não</option>
                                                     </select>
                                                     <label for="floatingSelect">Inativa</label>
                                                 </div>
@@ -746,6 +785,12 @@
             -->
             <!-- Widgets End -->
 
+<?php
+if ($saved)
+{
+echo "<p role='alert'>Usuário cadastrado com sucesso!</p>";
+}
+?>
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
