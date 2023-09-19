@@ -4,6 +4,22 @@ require_once("DataBase.php");
 $database = new DataBase();
 $conn = $database->connect();
 
+function PesquisarPorNome($nome)
+{
+$sql = "select * from reserva_cliente c, reserva_endereco e where e.id=c.endereco_id and c.nome like '%".$nome."%'";
+return mysqli_query($GLOBALS["conn"],$sql);
+mysqli_close($GLOBALS["conn"]);
+}
+
+
+
+function Listar()
+{
+$sql = "select * from reserva_cliente c, reserva_endereco e where e.id=c.endereco_id order by c.id desc limit 10";
+return mysqli_query($GLOBALS["conn"],$sql);
+mysqli_close($GLOBALS["conn"]);
+}
+
 function Inserir($nome, $cnpj, $cpf, $razaoSocial, $tipo, $logradouro, $numero, $bairro, $cidade, $cep, $complemento, $uf)
 {
 

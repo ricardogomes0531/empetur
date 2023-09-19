@@ -402,89 +402,49 @@ $saved = true;
                       </div>
                     <!-- End Modal -->
                     <div class="d-flex mb-2">
-                        <input class="form-control bg-transparent" type="text" placeholder="Pesquisar cliente">
-                        <button type="button" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+<form action="" method="get">
+                        <input class="form-control bg-transparent" type="text" placeholder="Pesquisar cliente" name="pesquisar">
+                        <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+</form>
                     </div>
+                    <div class="table-responsive">
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-dark">
                                     <th scope="col"></th>
-                                    <th scope="col">Nome da reserva</th>
-                                    <th scope="col">Áreas</th>
-                                    <th scope="col">Responsável</th>
-                                    <th scope="col">Data reserva</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Gecom</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">CNPJ</th>
+                                    <th scope="col">Razão Social</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+<?php
+require_once("Php/Repository/ReservaClienteRepository.php");
+@$pesquisa = $_GET["pesquisar"];
+if (isset($pesquisa))
+{
+$query = PesquisarPorNome($pesquisa);
+}
+else
+{
+$query = Listar();
+}
+while($result = mysqli_fetch_array($query))
+{
+
+echo "
                                 <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td>Paid</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td>Paid</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td>Paid</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td>Paid</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td>Paid</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href=""><i class="bi bi-info-square"></i></a>
-                                        <a class="btn btn-sm btn-warning" href=""><i class="bi bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
+                                    <td>".$result["nome"]."</td>
+                                    <td>".$result["cpf"]."</td>
+                                    <td>".$result["cnpj"]."</td>
+                                    <td>".$result["nome_razao_social"]."</td>
+                                    <td><a class='btn btn-sm btn-primary m-2' href=''><i class='bi bi-info-square-fill'></i></a></td>
+                                </tr>";
+}
+?>
                             </tbody>
                         </table>
                     </div>
